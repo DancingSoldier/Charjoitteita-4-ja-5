@@ -1,0 +1,60 @@
+#include <iostream>
+
+using namespace std;
+
+// Funktio, joka varaa tilaa kokonaislukutaulukolle
+int* varaa_taulukko(int n) {
+    return new int[n];
+}
+
+// Funktio, joka lukee taulukkoon kokonaisluvut näppäimistöltä
+void lue_arvot(int* t, int n) {
+    cout << "Syötä " << n << " kokonaislukua:" << endl;
+    for (int i = 0; i < n; ++i) {
+        cout << "Taulukon alkio " << i + 1 << ": ";
+        cin >> t[i];
+    }
+}
+
+// Funktio, joka kääntää taulukon arvot päinvastaiseen järjestykseen
+void kaanna(int* t, int n) {
+    for (int i = 0; i < n / 2; ++i) {
+        int temp = t[i];
+        t[i] = t[n - i - 1];
+        t[n - i - 1] = temp;
+    }
+}
+
+// Funktio, joka tulostaa taulukon arvot
+void tulosta_arvot(const int* t, int n) {
+    cout << "Taulukon arvot: ";
+    for (int i = 0; i < n; ++i) {
+        cout << t[i] << " ";  
+    }
+    cout << endl;
+}
+
+int main() {
+    int n;
+
+
+    cout << "Anna taulukon koko: ";
+    cin >> n;
+
+
+    int* taulukko = varaa_taulukko(n);
+
+
+    lue_arvot(taulukko, n);
+
+
+    kaanna(taulukko, n);
+
+
+    tulosta_arvot(taulukko, n);
+
+
+    delete[] taulukko;
+
+    return 0;
+}
