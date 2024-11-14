@@ -1,0 +1,38 @@
+#include <iostream>
+
+using namespace std;
+
+
+void lue_arvot(int* t, int n) {
+    cout << "Syötä " << n << " kokonaislukua:" << endl;
+    for (int i = 0; i < n; ++i) {
+        cout << "Taulukon alkio " << i + 1 << ": ";
+        cin >> t[i];  // Lue luku ja tallenna taulukkoon
+    }
+}
+
+int main() {
+    int n;
+
+
+    cout << "Anna taulukon koko: ";
+    cin >> n;
+
+    // Varaa muistia taulukolle
+    int* taulukko = new int[n];
+
+
+    lue_arvot(taulukko, n);
+
+
+    cout << "Taulukon sisällöt: ";
+    for (int i = 0; i < n; ++i) {
+        cout << taulukko[i] << " ";
+    }
+    cout << endl;
+
+
+    delete[] taulukko;
+
+    return 0;
+}
