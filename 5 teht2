@@ -1,0 +1,49 @@
+#include <iostream>
+#include <string>
+
+class Auto {
+public:
+    std::string rek;
+    int h_nop;
+    int nop;
+    int matk;
+
+    // Konstruktori
+    Auto(std::string rek, int h_nop) {
+        this->rek = rek;
+        this->h_nop = h_nop;
+        this->nop = 0;
+        this->matk = 0;
+    }
+
+    // Kiihdytä-metodi
+    void kiihdyta(int nop_muut) {
+        int uus_nop = nop + nop_muut;
+
+        if (uus_nop < 0) {
+            uus_nop = 0;
+        }
+        else if (uus_nop >= h_nop) {
+            uus_nop = h_nop;
+        }
+        nop = uus_nop;
+    }
+};
+
+int main() {
+    Auto auto1("ABC-123", 142);
+
+    auto1.kiihdyta(30);
+    std::cout << auto1.nop << std::endl;
+
+    auto1.kiihdyta(70);
+    std::cout << auto1.nop << std::endl;
+
+    auto1.kiihdyta(50);
+    std::cout << auto1.nop << std::endl;
+
+    auto1.kiihdyta(-200);
+    std::cout << auto1.nop << std::endl;
+
+    return 0;
+}
