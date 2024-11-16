@@ -1,0 +1,100 @@
+#include <iostream>
+#include <string>
+#include <vector>
+#include <cstdlib>
+#include <ctime>
+
+class Auto {
+public:
+    std::string rek;
+    int h_nop;
+    int nop;
+    int matk;
+    bool voitto;
+
+    // Konstruktori
+    Auto(std::string rek, int h_nop) {
+        this->rek = rek;
+        this->h_nop = h_nop;
+        this->nop = 0;
+        this->matk = 0;
+        this->voitto = false;
+    }
+
+    // Kiihdytä-metodi
+    void kiihdyta(int nop_muut) {
+        int uus_nop = nop + nop_muut;
+
+        if (uus_nop < 0) {
+            uus_nop = 0;
+        }
+        else if (uus_nop >= h_nop) {
+            uus_nop = h_nop;
+        }
+        nop = uus_nop;
+    }
+
+    // Kulje-metodi
+    void kulje(int aika_tunneissa) {
+        matk += aika_tunneissa * nop;
+    }
+
+    // Tulostus
+    std::string toString(int aika) const {
+        return std::to_string(aika) + " tunti: " + rek + ", " + std::to_string(h_nop) +
+            " km/h, " + std::to_string(nop) + " km/h, " + std::to_string(matk) + " km";
+    }
+};
+
+// matkan tarkistus
+bool matk_check(int matka) {
+    return matka >= 10000;
+}
+
+int main() {
+    std::srand(std::time(nullptr));
+    std::vector<Auto> kilpailijat;
+
+    // autojen luonti
+    for (int i = 1; i <= 10; ++i) {
+        std::string rek = "ABC-" + std::to_string(i);
+        int h_nop = std::rand() % 101 + 100; // 100-200 km/h
+        kilpailijat.emplace_back(rek, h_nop);
+    }
+
+    int aika = 0;
+    bool loppuviiva = false;
+
+    while (!loppuviiva) {
+        aika++;
+        std::cout << " " << aika << " -tunti" << std::endl;
+
+        for (auto& auto1 : kilpailijat) {
+            int muutos = std::rand() % 26 - 10; // -10 to 15
+            auto1.kiihdyta(muutos);
+            auto1.kulje(1);
+
+            std::cout << auto1.rek << ": " << auto1.nop << " km/h " << auto1.matk << " km" << std::endl;
+
+            if (matk_check(auto1.matk)) {
+                std::cout << "\033[92m" << auto1.rek << " voitti\033[0m" << std::endl;
+                auto1.voitto = true;
+                loppuviiva = true;
+            }
+        }
+    }
+
+    // tulokset
+    for (const auto& auto1 : kilpailijat) {
+        std::cout << "\n" << auto1.rek << "\n"
+            << "Huippunopeus: " << auto1.h_nop << " km/h\n"
+            << "Nopeus: " << auto1.nop << " km/h\n"
+            << "Ajettu matka: " << auto1.matk << " km" << std::endl;
+
+        if (auto1.voitto) {
+            std::cout << "\033[92m" << auto1.rek << " voitti\033[0m" << std::endl;
+        }
+    }
+
+    return 0;
+}
